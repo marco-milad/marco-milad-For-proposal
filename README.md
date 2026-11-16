@@ -9,7 +9,7 @@ A reusable, **gated and evidence-first** workflow for agencies that pitch client
 | Track | What you get |
 |---|---|
 | **M: Integrated Marketing & Digital Growth Strategy** | The team's marketing strategy becomes the backbone of the proposal. Around it: anonymous competitor patterns, the agency's services as an execution model, campaigns, a 90-day plan and KPIs. Delivered as Arabic-first HTML, PDF and editable PPTX |
-| **W: Web + SEO technical proposal** | Site audit (crawl, Lighthouse, pa11y), keyword map, a weighted platform decision, a URL and redirect policy, a sitemap mind-map, and a bilingual home and product prototype in a single HTML file. Delivered as a 24-page Arabic-led PDF |
+| **W: Web + SEO technical proposal** | Works whether the client already has a site or not:<br>- **Existing site:** audit (crawl, Lighthouse, pa11y), keyword map, weighted platform decision, URL and redirect policy.<br>- **Greenfield:** market and search baseline, keyword map, platform choice, launch plan.<br><br>Both paths include a sitemap mind-map and a bilingual home + product prototype in one HTML file, and are delivered as a roughly 24-page Arabic-led PDF |
 
 ## What it enforces
 
@@ -53,6 +53,7 @@ The scripts default to Edge on Windows. On other systems, set `BROWSER_PATH` to 
 
 ```
 SKILL.md                       workflow, ground rules, workspace layout, script usage
+references/client-intake.md    what data to collect from the client, what each item unlocks, what happens if it's missing
 references/marketing-track.md  Track M phases, research streams, competitor criteria, proposal outline
 references/web-seo-track.md    Track W phases, audit, keywords, platform matrix, IA, prototype, PDF outline
 references/evidence-and-qa.md  evidence labels, finding template, banned claims, QA checklist

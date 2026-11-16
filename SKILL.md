@@ -1,6 +1,6 @@
 ---
 name: client-proposal
-description: Gated, evidence-first workflow for an agency preparing a proposal for a new client. Track M is an Integrated Marketing & Digital Growth Strategy, where the team's own strategy leads and is followed by the agency's services, anonymous competitor patterns, campaigns, a 90-day plan and KPIs. Track W is a technical Web + SEO proposal: site audit, keyword map, platform decision, sitemap, a bilingual home and product prototype, and an Arabic-led PDF. Use this skill whenever the user is pitching, preparing an offer for, or researching a prospect or client. That includes "عرض"/"بروبوزال"/"proposal"/"خطة" for a company, auditing a prospect's website or competitors for a pitch, turning a team strategy (.docx) into a client proposal, planning a website or SEO offer, or producing the proposal HTML/PDF/PPTX or a clickable prototype. Use it even if the user doesn't say "workflow" or name the skill.
+description: Gated, evidence-first workflow for an agency preparing a proposal for a new client. Track M is an Integrated Marketing & Digital Growth Strategy, where the team's own strategy leads and is followed by the agency's services, anonymous competitor patterns, campaigns, a 90-day plan and KPIs. Track W is a technical Web + SEO proposal, for clients with an existing site or with none yet (greenfield): site audit or market baseline, keyword map, platform decision, sitemap, a bilingual home and product prototype, and an Arabic-led PDF. Use this skill whenever the user is pitching, preparing an offer for, or researching a prospect or client. That includes "عرض"/"بروبوزال"/"proposal"/"خطة" for a company, auditing a prospect's website or competitors for a pitch, turning a team strategy (.docx) into a client proposal, planning a website or SEO offer, or producing the proposal HTML/PDF/PPTX or a clickable prototype. Use it even if the user doesn't say "workflow" or name the skill.
 ---
 
 # Client proposal workflow
@@ -10,7 +10,9 @@ Two proposal types, built for Arabic-first, bilingual B2B markets such as Egypt 
 | Track | Use when | Leads the story | Deliverables |
 |---|---|---|---|
 | **M: Integrated Marketing & Digital Growth** | The team wrote a marketing strategy (often an Arabic .docx) and the agency pitches its services around it | The **team's strategy**. The website is one service among several, about 10% of the words, and comes last | HTML (Arabic-first RTL), PDF, editable PPTX, plus an internal research pack |
-| **W: Web + SEO technical/strategic** | The client wants a new or better website and search visibility | The **audit evidence** → keywords → platform → IA → prototype | One Arabic-led bilingual PDF, a single-file clickable prototype, and a separate sitemap image |
+| **W: Web + SEO technical/strategic** | The client wants a new or better website and search visibility. This covers both an **existing site** and a **greenfield** site that hasn't been built yet | The **audit evidence** → keywords → platform → IA → prototype | One Arabic-led bilingual PDF, a single-file clickable prototype, and a separate sitemap image |
+
+**First, send the user the intake checklist** in [references/client-intake.md](references/client-intake.md). It lists what to collect, what each item unlocks, and what happens if it is missing. Start with what exists; missing items become limitations or discovery questions, never blockers.
 
 Read the track file before starting:
 - Track M: [references/marketing-track.md](references/marketing-track.md)
@@ -38,9 +40,9 @@ Users often review on a phone and give feedback like "the home page feels thin, 
 - The decisions you need from the user. Ask them in **one batch**, not one at a time.
 
 **Phase-0 decisions to collect** (defaults in brackets):
-1. Which track(s)?
+1. Which track(s)? For Track W: existing site or greenfield?
 2. Client-facing language and format? [Arabic-led, English terms kept verbatim and explained in Arabic, PDF]
-3. Inputs available? Team strategy, brief, current platform and ERP, the agency's past proposals or templates (for its visual identity), the client's logo.
+3. Which intake items are available? (see client-intake.md) Note which are missing and say how each gap will be handled.
 4. Competitors? [Only the ones the team strategy names; anonymous in client copy.]
 5. The agency's service list and naming? [Ask. Don't assume a fixed set.]
 6. Pricing or commercial content? [None: no prices, packages, deposit terms or delivery dates.]

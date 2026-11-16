@@ -10,6 +10,21 @@ No prices. The format is **one Arabic-led bilingual PDF**: Arabic body text, Eng
 
 If the user has a past proposal they like (for example with services, a why-choose-us section, keyword tiers, an xmind sitemap), analyse it first. Write `web-seo/inputs/reference-analysis.md` covering what to keep and which gaps to close, then match its format.
 
+## Two starting points: existing site or greenfield
+
+At intake, ask whether the client has a website. The phases stay the same; what changes is their content.
+
+| Phase | **Existing site** | **Greenfield (no site yet)** |
+|---|---|---|
+| P1 | Audit of the current site (below) | **Market & search baseline**:<br>- competitor sites on the 14 criteria from the Track M competitor matrix (in marketing-track.md), without the business-claims columns<br>- SERP sampling for the client's main categories: who ranks today (directories, marketplaces, competitors)<br>- the client's existing footprint (Google Business Profile, social, marketplaces, directory listings, branded search)<br>- an inventory of the content the client already has |
+| P2 | Keyword map | Same. It is even more central here, because it defines the site |
+| P3 | Options: improve / extend / rebuild, plus URL migration and a redirect map | **Platform choice only**: options weighted by the same matrix, with no "keep current platform" option unless they run an ERP/shop that has a web module. **No redirect map.** Instead: a domain & launch plan (domain, email, analytics and Search Console set up from day 1, Google Business Profile, sitemap submission) |
+| P4 | IA + prototype | Same. The sitemap shows the full launch scope; mark phase-2 pages |
+| P5 | The PDF opens with "where the current site stands today" | The PDF opens with **"the opportunity in the market"**: what searchers look for, who currently captures it, and where the gap is. Replace the audit and migration pages with:<br>- "market & competitor landscape"<br>- "launch foundation": domain, analytics, Search Console, Google Business Profile, schema from day 1<br>- "content to create before launch" |
+| P6 | QA as usual | QA as usual. Number checks run against the SERP sample and competitor data instead of the crawl |
+
+**Greenfield honesty rule.** With no site there is no baseline. Frame the KPIs as "measured from launch". Never imply expected traffic or rankings.
+
 ## Phases and gates
 
 | Phase | Output | Gate |
