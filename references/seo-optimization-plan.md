@@ -6,6 +6,21 @@ A topic-by-topic checklist so no SEO area is forgotten. For each topic it says:
 - **Needs from user:** data only the user or the client can provide. **"None"** means you can do it from public data alone.
 - **If missing:** how to proceed honestly without it.
 
+**Deep-dive modules** (each can be run on its own, by name):
+
+| Module | File |
+|---|---|
+| Technical audit | [modules/technical-seo.md](modules/technical-seo.md) |
+| Schema | [modules/schema.md](modules/schema.md) |
+| GEO / AEO / AI SEO | [modules/geo-ai-seo.md](modules/geo-ai-seo.md) |
+| E-E-A-T and content | [modules/eeat-content.md](modules/eeat-content.md) |
+| Local SEO | [modules/local-seo.md](modules/local-seo.md) |
+| Backlinks | [modules/backlinks.md](modules/backlinks.md) |
+| CRO and tracking | [modules/cro.md](modules/cro.md) |
+| Scoring and the PDF report | [modules/report.md](modules/report.md) |
+
+This file stays the overview and the batch data request; the modules hold the detailed checks.
+
 Use it in two ways:
 - **Inside Track W.** It feeds P1 (audit), P2 (keyword map and the off-page/local checklist) and the P5 pages "Technical SEO foundation", "Content, knowledge hub & local SEO" and "Monthly SEO plan".
 - **Standalone.** For an SEO plan on an existing site with no redesign, run S1 → S2 below and skip the platform and prototype phases.
@@ -31,7 +46,7 @@ Send this to the user **in one message** at the start, in their language. Label 
 | # | Data / access | Feeds topics | Type | If missing |
 |---|---|---|---|---|
 | D1 | Website URL + the market (countries/cities) and languages | Everything | Blocking | — |
-| D2 | **Google Search Console** access (a restricted user is enough) | Indexing, queries, CTR, Core Web Vitals field data, links | Strengthens | Lab data only; no query, click or ranking numbers; "baseline set in discovery" |
+| D2 | **Google Search Console** access (a restricted user is enough) | Indexing, queries, CTR, Core Web Vitals field data, links, the **Generative AI performance report** (AI Overviews/AI Mode) and the **"Search generative AI" control** setting | Strengthens | Lab data only; no query, click or ranking numbers; "baseline set in discovery" |
 | D3 | **GA4** access (viewer) | Organic traffic and conversions baseline, landing pages | Strengthens | No traffic or conversion numbers anywhere |
 | D4 | **Ahrefs / Semrush** (or similar) access | Search volume, keyword difficulty, backlink profile, competitor gaps | Strengthens | Keywords prioritized by relevance (labelled as such); backlinks from GSC "Links" + Bing Webmaster Tools if verified; no volumes or DR figures |
 | D5 | **Keyword map**: primary keyword per URL (`url,keyword` CSV), or approval of the P2 map | Title, H1, keyword placement, cannibalization | Blocking for placement checks | Build it in P2 first; placement is checked after Gate B |
@@ -54,7 +69,7 @@ Send this to the user **in one message** at the start, in their language. Label 
 | **Sitemap.xml & robots.txt** | Fetch both. Sitemap: only 200, canonical, indexable URLs? Includes thin, duplicate or redirected URLs? `lastmod` sane? Robots: blocks anything that should rank? References the sitemap? | Dynamic sitemap (per language), robots rules, submission in GSC and Bing | D2 to submit and read the Pages report | Plan only; submission happens after access |
 | **Canonical URLs** | `extract.py` canonical columns: self-canonical, missing, pointing elsewhere, conflicting with hreflang or redirects. Also check duplicate hosts (http/https, www/non-www, a CMS default subdomain, trailing slash, parameters) | One canonical host via 301; self-canonical on every indexable page; parameter handling | None | — |
 | **Indexing & crawl** *(beyond the mind map)* | noindex pages, non-200 in sitemap, redirect chains, 404s linked internally, soft-404 thin pages, HTTPS | Clean-up list; 301 map for anything moved | D2 for the Pages/indexing report | Crawl-based indicators only |
-| **Structured data** *(beyond the mind map)* | `extract.py` JSON-LD types per template; validate with Google's Rich Results Test manually (the user runs it, no upload of client files) | Schema per template: Organization + WebSite, BreadcrumbList, Product/Service, FAQPage, Article, LocalBusiness | D7 for LocalBusiness | Organization only, with fields from the site |
+| **Structured data** *(beyond the mind map)* | `extract.py` JSON-LD types per template; validate with Google's Rich Results Test manually (the user runs it, no upload of client files) | Schema per template: Organization + WebSite, BreadcrumbList, Product/Service, Article, LocalBusiness. Check Google's current support first (modules/schema.md); FAQ rich results and the sitelinks search box are retired | D7 for LocalBusiness | Organization only, with fields from the site |
 | **Multilingual / hreflang** *(beyond the mind map)* | `hreflang` present, reciprocal, matching canonicals; `lang`/`dir` attributes; real Arabic content vs machine-translated stubs | URL policy (e.g. `/ar/`), reciprocal hreflang, x-default | None | — |
 
 ## 2. On-page SEO
@@ -90,9 +105,9 @@ Only when the business has a physical location or serves defined areas. Otherwis
 
 | Check | Plan | Needs from user |
 |---|---|---|
-| Do pages answer real buyer questions? FAQ present and marked up? Answer-first paragraphs? Consistent entity facts (name, what they sell, where) across the site and profiles? Is AI crawler access blocked in robots.txt? Does an `llms.txt` exist (optional, low cost)? | Question bank from the keyword map's question tier; answer-first structure (the question as H2, a 40–60 word direct answer, then the detail); FAQPage + Organization schema; `sameAs` to official profiles; a knowledge hub; robots policy for AI crawlers decided **with the client** | D10 (writer or expert), D8 (official profiles for `sameAs`) |
+| Do pages answer real buyer questions? FAQ present and marked up? Answer-first paragraphs? Consistent entity facts (name, what they sell, where) across the site and profiles? Is AI crawler access blocked in robots.txt? Does an `llms.txt` exist (optional, low cost)? | Question bank from the keyword map's question tier; answer-first structure (the question as H2, a 40–60 word direct answer, then the detail); Organization schema with `sameAs` to official profiles (Google says its AI features need no special markup; clear visible answers matter more); a knowledge hub; robots policy for AI crawlers decided **with the client** | D10 (writer or expert), D8 (official profiles for `sameAs`) |
 
-**Honesty rule:** there is no reliable public measurement of AI-search visibility yet. Present AEO/GEO as readiness work. Sample queries in AI tools can be shown as an **indicator**, with the date and the tool named. Never promise citations.
+**Honesty rule:** for Google, the only first-party AI-visibility data is the Search Console Generative AI performance report (D2). For other engines there is no reliable public measurement. Sample prompts are an **indicator**: repeated runs, with the date, engine and language named (method in [modules/geo-ai-seo.md](modules/geo-ai-seo.md)). Never promise citations.
 
 ## 5. Off-page SEO
 

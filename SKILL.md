@@ -1,6 +1,6 @@
 ---
 name: client-proposal
-description: Gated, evidence-first workflow for an agency preparing a proposal for a new client. Track M is an Integrated Marketing & Digital Growth Strategy, where the team's own strategy leads and is followed by the agency's services, anonymous competitor patterns, campaigns, a 90-day plan and KPIs. Track W is a technical Web + SEO proposal, for clients with an existing site or with none yet (greenfield): site audit or market baseline, keyword map, platform decision, sitemap, a bilingual home and product prototype, and an Arabic-led PDF. Use this skill whenever the user is pitching, preparing an offer for, or researching a prospect or client. That includes "عرض"/"بروبوزال"/"proposal"/"خطة" for a company, auditing a prospect's website or competitors for a pitch, turning a team strategy (.docx) into a client proposal, planning a website or SEO offer, writing a full SEO optimization plan (technical, on-page, local, off-page, AEO/GEO) even without a redesign, auditing or redesigning a site's UI/UX, or producing the proposal HTML/PDF/PPTX or a clickable prototype. Use it even if the user doesn't say "workflow" or name the skill.
+description: Gated, evidence-first workflow for an agency preparing a proposal for a new client. Track M is an Integrated Marketing & Digital Growth Strategy, where the team's own strategy leads and is followed by the agency's services, anonymous competitor patterns, campaigns, a 90-day plan and KPIs. Track W is a technical Web + SEO proposal, for clients with an existing site or with none yet (greenfield): site audit or market baseline, keyword map, platform decision, sitemap, a bilingual home and product prototype, and an Arabic-led PDF. Use this skill whenever the user is pitching, preparing an offer for, or researching a prospect or client. That includes "عرض"/"بروبوزال"/"proposal"/"خطة" for a company, auditing a prospect's website or competitors for a pitch, turning a team strategy (.docx) into a client proposal, planning a website or SEO offer, writing a full SEO optimization plan (technical, on-page, local, off-page, AEO/GEO) even without a redesign, auditing or redesigning a site's UI/UX or information architecture, a single focused audit (technical SEO, schema, GEO/AI SEO, E-E-A-T, local SEO, backlinks, CRO/tracking) or a scored audit PDF, or producing the proposal HTML/PDF/PPTX or a clickable prototype. Use it even if the user doesn't say "workflow" or name the skill.
 ---
 
 # Client proposal workflow
@@ -19,6 +19,30 @@ Read the track file before starting:
 - Track W: [references/web-seo-track.md](references/web-seo-track.md)
 - Any SEO work (inside Track W, or a standalone SEO plan for an existing site): [references/seo-optimization-plan.md](references/seo-optimization-plan.md). It covers every SEO topic and lists the data each one needs from the user. Send its data request (D1–D13) in one batch at the start.
 - Any UI/UX work (redesign, prototype, UX review of an existing site): [references/ui-ux-plan.md](references/ui-ux-plan.md). Audit → IA → templates → design system → mobile/RTL → accessibility → prototype validation, with its own data request (U1–U12); send it together with D1–D13.
+
+## Modules (sub-skills you can run on their own)
+
+When the user asks for one area only, e.g. «اعمل فحص Schema», "check E-E-A-T", «فحص تقني», "local SEO for this shop", "design the IA", "make the UI not look generic", "audit report PDF":
+- Load just that module.
+- Still send only the data-request items the module lists.
+- Still follow the ground rules below.
+
+Inside a full Track W, the modules are used at the phases shown.
+
+| Module | File | Used in Track W |
+|---|---|---|
+| Technical SEO audit | [references/modules/technical-seo.md](references/modules/technical-seo.md) | P1 |
+| Schema | [references/modules/schema.md](references/modules/schema.md) | P1, P4 |
+| GEO / AEO / AI SEO | [references/modules/geo-ai-seo.md](references/modules/geo-ai-seo.md) | P1, P2, P5 |
+| E-E-A-T and content | [references/modules/eeat-content.md](references/modules/eeat-content.md) | P1, P2 |
+| Local SEO (GBP, NAP, listings) | [references/modules/local-seo.md](references/modules/local-seo.md) | P1, P2 |
+| Backlinks and off-page | [references/modules/backlinks.md](references/modules/backlinks.md) | P1, P2 |
+| CRO and conversion tracking | [references/modules/cro.md](references/modules/cro.md) | P1, P4 |
+| Information architecture | [references/modules/information-architecture.md](references/modules/information-architecture.md) | P3, P4 |
+| Distinctive frontend / UI | [references/modules/frontend-design.md](references/modules/frontend-design.md) | P4 |
+| Scoring and the audit PDF | [references/modules/report.md](references/modules/report.md) | P1 report, P5, P6 |
+
+**Facts that expire.** Google features, AI crawler tokens and schema support change several times a year. The modules record what was verified and when. Before quoting any of them in client copy, re-check the official source and write the check date in the internal file.
 
 Read these as you reach the stage that needs them:
 - Before writing any finding or the QA pass: [references/evidence-and-qa.md](references/evidence-and-qa.md)
@@ -103,6 +127,7 @@ Create everything under `<workspace>/<client>-proposal/`, next to the untouched 
 ## Bundled scripts
 
 - They use only Node 22 and Python stdlib, and drive the system browser through CDP.
+- In Git Bash on Windows, set `MSYS_NO_PATHCONV=1` before passing URL paths like `/` as arguments, or the shell rewrites them into Windows paths.
 - The browser path defaults to Edge on Windows. Override it with the env var `BROWSER_PATH` (Chrome/Chromium on macOS or Linux).
 - Pass a fresh temp profile dir, and give each concurrent run its own port.
 
@@ -112,6 +137,8 @@ Create everything under `<workspace>/<client>-proposal/`, next to the untouched 
 | `scripts/extract.py` | Offline on-page SEO extraction → `pages.json` + summary. Covers titles, meta (incl. length), H1/H2/H3, canonical, hreflang, JSON-LD, alt, Arabic presence, CMS boilerplate, and the internal link graph (links out, inlinks, orphans) | `python -I extract.py <crawlDir> [boilerplateRegex]` |
 | `scripts/keyword_check.py` | Where each page's primary keyword appears (title, H1, description, first 100 words, slug, H2, alt) + cannibalization. Arabic-normalized. Needs the keyword map as `url,keyword` CSV | `python -I keyword_check.py <pages.json> <keyword-map.csv> [out.csv]` |
 | `scripts/ux_check.mjs` | Rendered-page UX/a11y checks: WCAG contrast per text element (text over images reported as unmeasured), tap targets (24 px with the spacing exception, 44 px advisory), small text, unnamed links/buttons, unlabelled fields, viewport, lang/dir, overflow. Works on local files and live URLs | `node ux_check.mjs <file.html[#hash] or url> <width> <mobile 0/1> <profileDir> [port] [out.json]` |
+| `scripts/schema_check.py` | JSON-LD in raw HTML: types (incl. `@graph`), retired Google features (FAQPage, HowTo, SearchAction…), missing key properties, Offer price/currency/availability format, relative URLs, placeholders, invalid JSON | `python -I schema_check.py <crawlDir or file.html …> [out.json]` |
+| `scripts/ai_access.py` | robots.txt access per AI crawler, split by purpose (search / user-triggered / training), using RFC 9309 group and longest-match rules. Does not see WAF blocks | `python -I ai_access.py <https://site or robots.txt> [path=/]` |
 | `scripts/shot.mjs` | Full-page screenshot (RTL-safe) + overflow and broken-image report. Supports `file.html#hash` | `node shot.mjs <in.html[#hash]> <out.png> <width> <dpr> <mobile 0/1> <profileDir> [port]` |
 | `scripts/route-test.mjs` | Click-through test for a single-file prototype, driven by a JSON steps file | `node route-test.mjs <prototype.html> <steps.json> <profileDir> <width> <mobile 0/1> [port]` |
 | `scripts/pagecheck.mjs` | Per-page fit check for fixed A4 `.page` layouts | `node pagecheck.mjs <in.html> <profileDir> [footerReservePx=62] [port]` |

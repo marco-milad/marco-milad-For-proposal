@@ -23,6 +23,25 @@ A reusable, **gated and evidence-first** workflow for agencies that pitch client
 
 > خطة UI/UX: من فحص الموقع الحالي لحد Prototype متجرب، وكل قرار في التصميم ليه سبب واضح.
 
+## Modules (sub-skills)
+
+Each module runs inside the full workflow, or on its own when you ask for just that area:
+
+| Module | What it does |
+|---|---|
+| Technical SEO | Crawl/index, raw vs rendered HTML, sitemaps, canonicals, CWV, mobile parity, security hygiene |
+| Schema | Template markup, Google's retired features (FAQ, HowTo, sitelinks search box), merchant-listing rules |
+| GEO / AEO / AI SEO | AI crawler access by purpose, readiness, a repeatable prompt-sample method, the claim ledger |
+| E-E-A-T and content | Who/How/Why, trust signals, the swap test for location pages, a voice-of-customer quote bank |
+| Local SEO | GBP scorecard, review policy, NAP matrix, listings, local pages |
+| Backlinks | Data-sufficiency gate, link status taxonomy, an earned-link plan within Google's spam policies |
+| CRO and tracking | Page review order, form rules, pop-up policy, a conversion-tracking audit with health vs coverage |
+| Information architecture | Four systems, content inventory, bilingual labels, URL map, tree tests, migration |
+| Distinctive frontend / UI | A design direction plan, a "would I make this for anyone?" check, generic patterns to avoid (incl. Arabic typography), tokens, budgets |
+| Report | Health vs coverage scoring, the report structure, and a pipeline from data JSON to Arabic PDF |
+
+> وحدات فرعية: كل وحدة تقدر تطلبها لوحدها، زي فحص تقني أو Schema أو GEO أو E-E-A-T أو Local أو Backlinks أو CRO أو هيكل الموقع أو التصميم أو تقرير PDF.
+
 ## What it enforces
 
 - Phase gates with mobile and desktop screenshots at each checkpoint.
@@ -42,6 +61,8 @@ All scripts are Node 22 or Python stdlib, with no dependencies. They drive your 
 - `extract.py`: on-page SEO extraction into `pages.json`, including the internal link graph (inlinks, orphans).
 - `keyword_check.py`: checks where each page's primary keyword appears, and flags cannibalization. Matches Arabic after normalizing spelling variants.
 - `ux_check.mjs`: rendered-page UX and accessibility checks (contrast, tap targets, small text, unnamed controls, unlabelled fields), on local files or live URLs.
+- `schema_check.py`: JSON-LD checks, including Google's retired rich-result types and merchant-listing formats.
+- `ai_access.py`: what each AI crawler may fetch according to robots.txt, by purpose (search, user-triggered, training).
 - `shot.mjs`: full-page screenshots that render RTL pages correctly.
 - `route-test.mjs`: click-through tests for a single-file prototype, driven by a JSON steps file.
 - `pagecheck.mjs`: checks that each fixed A4 page fits its content.

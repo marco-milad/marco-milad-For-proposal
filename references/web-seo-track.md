@@ -78,7 +78,7 @@ At intake, ask whether the client has a website. The phases stay the same; what 
   | Head (category) | — | H1, menu, URL |
   | Product/Brand | — | Product H1, title, URL |
   | Long-tail commercial | Category + use/place/buyer, e.g. "{category} supplier {city}" / «مورد {الفئة} في {المدينة}» | Meta and first paragraph |
-  | Questions | — | Knowledge articles + FAQ schema |
+  | Questions | — | Knowledge articles + a visible FAQ section (see modules/schema.md on FAQPage) |
   | Local/commercial modifiers | Country, city, «سعر», «مورد» / supplier, price | Added to the tiers above |
 
 - **Rules:**
@@ -133,6 +133,10 @@ At intake, ask whether the client has a website. The phases stay the same; what 
 
 ## P4 IA + prototype: how
 
+**Before building:**
+- Run [modules/information-architecture.md](modules/information-architecture.md): content inventory, labels, URL map, tree-test plan.
+- Write the design direction plan with its generic check from [modules/frontend-design.md](modules/frontend-design.md). No prototype HTML until the direction plan has passed the "would I make this for any client?" review.
+
 - **Sitemap image.** A JS mind-map HTML page: root → L1 sections → L2 → leaves, bilingual labels, `NEW` badges, URL chips. Screenshot it with `shot.mjs` at about 4200 px wide.
 - **`ia-sitemap.md`** covers:
   - principles and navigation
@@ -140,11 +144,11 @@ At intake, ask whether the client has a website. The phases stay the same; what 
 
     | Template | Schema |
     |---|---|
-    | Home | Organization + WebSite + SearchAction |
+    | Home | Organization + WebSite (no SearchAction: the sitelinks search box was retired in Nov 2024) |
     | Category | BreadcrumbList + ItemList |
-    | Product | Product + FAQPage |
+    | Product | Product (+ Offer / AggregateRating only from real data) |
     | Brand | — |
-    | Article / Knowledge hub | Article + FAQPage |
+    | Article / Knowledge hub | Article (+ author Person) |
     | Quote + thank-you | — |
     | Static | — |
 
@@ -182,7 +186,7 @@ At intake, ask whether the client has a website. The phases stay the same; what 
   11. 3-step quote explainer
   12. About
   13. Find us: map + NAP, for local SEO
-  14. FAQ + FAQPage schema, for GEO / AI Overviews
+  14. FAQ: answer-first, visible text. It helps visitors and AI answers because the text is clear, not because of markup. FAQ rich results stopped showing in Google on 7 May 2026
   15. Final CTA
   16. Newsletter
 - **Build from one Python generator** (`build.py`) that holds the EN/AR strings plus `header()`, `footer()`, `home()` and `pdp()`.
