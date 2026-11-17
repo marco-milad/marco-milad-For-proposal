@@ -2,6 +2,8 @@
 
 **SEO coverage.** Use [seo-optimization-plan.md](seo-optimization-plan.md) as the checklist for every SEO topic (technical, on-page, local, content/AEO/GEO, off-page, tools) and for its batch data request. P1 uses its Check columns, P2 its keyword and off-page/local rows, P5 its action-plan table.
 
+**UI/UX coverage.** Use [ui-ux-plan.md](ui-ux-plan.md) for the UX audit (P1), the IA, templates and design system (P4), the prototype validation (P4/P6) and the design-decisions table (P5).
+
 **Goal.** A technical and strategic proposal that the agency's web lead will implement. It answers four questions:
 - Where does the client's site stand today, with measured evidence?
 - What search opportunity exists?
@@ -49,7 +51,7 @@ At intake, ask whether the client has a website. The phases stay the same; what 
   - This gives, per page: meta description (and length), duplicate titles, H1/H2/H3, canonical, noindex, hreflang, JSON-LD, alt text, Arabic presence, `#` links, CMS boilerplate, and internal links out/in (orphans).
   - After Gate B, run `scripts/keyword_check.py` with the keyword map as `url,keyword` CSV to check keyword placement and cannibalization on the current pages.
 - **Lighthouse (mobile, lab).** Run it on representative URLs: home, a category, a product, a brand, contact. From the raw JSON, record Performance, LCP, total weight, render-blocking time and the LCP image load delay.
-- **Accessibility.** Run pa11y on about 5 pages (WCAG2AA) and report the error counts.
+- **Accessibility and UX.** Run pa11y on about 5 pages (WCAG2AA) and report the error counts. Run `scripts/ux_check.mjs` on the same pages at 390 (mobile) and 1440, and do the heuristic walk in ui-ux-plan.md §1.
 - **Indexing hygiene.** Check:
   - robots, sitemap, HTTPS/www
   - duplicate hosts (e.g. a CMS's default subdomain: is it noindex + canonical?)
@@ -188,6 +190,7 @@ At intake, ask whether the client has a website. The phases stay the same; what 
   - Set `html dir/lang` per page.
   - Wrap mixed Latin+number tokens in `<bdi>`.
 - **Screenshots** at 390 mobile, 768 and 1440, in both languages.
+- **`ux_check.mjs`** on every prototype view at 390 and 1440. The target is 0 contrast failures, 0 crowded tap targets, 0 unnamed controls and 0 unlabelled fields. Quote the numbers in the handover.
 
 ### Single-file prototype (when the user wants one shareable file)
 

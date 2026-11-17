@@ -17,6 +17,12 @@ A reusable, **gated and evidence-first** workflow for agencies that pitch client
 
 > خطة SEO شاملة: كل بند ومعاه إزاي نفحصه، وإيه اللي هنعمله، وإيه الداتا اللي محتاجينها من العميل عشان ننفذه.
 
+## UI/UX plan
+
+`references/ui-ux-plan.md` covers the full path from a UX audit of the current site to a validated prototype: information architecture, page templates and conversion, design system, mobile-first and RTL, accessibility, microcopy, and measurement. Each topic lists the data the client must provide (U1–U12). Every design decision is tied to a reason, and no conversion numbers are promised.
+
+> خطة UI/UX: من فحص الموقع الحالي لحد Prototype متجرب، وكل قرار في التصميم ليه سبب واضح.
+
 ## What it enforces
 
 - Phase gates with mobile and desktop screenshots at each checkpoint.
@@ -35,6 +41,7 @@ All scripts are Node 22 or Python stdlib, with no dependencies. They drive your 
 - `crawl.mjs`: polite sitemap crawl that saves the raw HTML.
 - `extract.py`: on-page SEO extraction into `pages.json`, including the internal link graph (inlinks, orphans).
 - `keyword_check.py`: checks where each page's primary keyword appears, and flags cannibalization. Matches Arabic after normalizing spelling variants.
+- `ux_check.mjs`: rendered-page UX and accessibility checks (contrast, tap targets, small text, unnamed controls, unlabelled fields), on local files or live URLs.
 - `shot.mjs`: full-page screenshots that render RTL pages correctly.
 - `route-test.mjs`: click-through tests for a single-file prototype, driven by a JSON steps file.
 - `pagecheck.mjs`: checks that each fixed A4 page fits its content.

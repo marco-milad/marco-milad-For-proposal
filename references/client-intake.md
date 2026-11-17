@@ -39,6 +39,17 @@ For any SEO work, also send the batch data request (D1–D13) in [seo-optimizati
 
 Everything else strengthens the plan. Missing items are named in the plan with the topic they would unlock.
 
+## UI/UX extras
+
+For any redesign or prototype, also send the UI/UX data request (U1–U12) in [ui-ux-plan.md](ui-ux-plan.md). Merge it with the SEO request and ask for each item once. The items that **block**:
+- the site's main goal and the one action that matters (U1)
+- the brand assets for the final look (U3)
+
+The highest-value strengtheners:
+- the sales team's top customer questions (U7)
+- analytics or heatmaps (U5, U6)
+- 3–5 real people for a short prototype test (U12)
+
 ## Greenfield extras (no website yet)
 
 | Input | Unlocks |
