@@ -11,6 +11,12 @@ A reusable, **gated and evidence-first** workflow for agencies that pitch client
 | **M: Integrated Marketing & Digital Growth Strategy** | The team's marketing strategy becomes the backbone of the proposal. Around it: anonymous competitor patterns, the agency's services as an execution model, campaigns, a 90-day plan and KPIs. Delivered as Arabic-first HTML, PDF and editable PPTX |
 | **W: Web + SEO technical proposal** | Works whether the client already has a site or not:<br>- **Existing site:** audit (crawl, Lighthouse, pa11y), keyword map, weighted platform decision, URL and redirect policy.<br>- **Greenfield:** market and search baseline, keyword map, platform choice, launch plan.<br><br>Both paths include a sitemap mind-map and a bilingual home + product prototype in one HTML file, and are delivered as a roughly 24-page Arabic-led PDF |
 
+## Comprehensive SEO plan
+
+`references/seo-optimization-plan.md` covers every SEO area: technical, on-page, local, content/AEO/GEO, off-page and tools. For each topic it gives how to check it, what to plan, and which data only the client can provide, gathered into one batch data request. Use it inside Track W, or on its own as an SEO plan for an existing site.
+
+> خطة SEO شاملة: كل بند ومعاه إزاي نفحصه، وإيه اللي هنعمله، وإيه الداتا اللي محتاجينها من العميل عشان ننفذه.
+
 ## What it enforces
 
 - Phase gates with mobile and desktop screenshots at each checkpoint.
@@ -27,7 +33,8 @@ A reusable, **gated and evidence-first** workflow for agencies that pitch client
 All scripts are Node 22 or Python stdlib, with no dependencies. They drive your installed Edge or Chrome over CDP.
 
 - `crawl.mjs`: polite sitemap crawl that saves the raw HTML.
-- `extract.py`: on-page SEO extraction into `pages.json`.
+- `extract.py`: on-page SEO extraction into `pages.json`, including the internal link graph (inlinks, orphans).
+- `keyword_check.py`: checks where each page's primary keyword appears, and flags cannibalization. Matches Arabic after normalizing spelling variants.
 - `shot.mjs`: full-page screenshots that render RTL pages correctly.
 - `route-test.mjs`: click-through tests for a single-file prototype, driven by a JSON steps file.
 - `pagecheck.mjs`: checks that each fixed A4 page fits its content.

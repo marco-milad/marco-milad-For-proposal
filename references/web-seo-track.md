@@ -1,5 +1,7 @@
 # Track W: Web + SEO technical/strategic proposal
 
+**SEO coverage.** Use [seo-optimization-plan.md](seo-optimization-plan.md) as the checklist for every SEO topic (technical, on-page, local, content/AEO/GEO, off-page, tools) and for its batch data request. P1 uses its Check columns, P2 its keyword and off-page/local rows, P5 its action-plan table.
+
 **Goal.** A technical and strategic proposal that the agency's web lead will implement. It answers four questions:
 - Where does the client's site stand today, with measured evidence?
 - What search opportunity exists?
@@ -44,7 +46,8 @@ At intake, ask whether the client has a website. The phases stay the same; what 
   - Fetch robots.txt and sitemap.xml.
   - Run `scripts/crawl.mjs`. Exclude large repetitive sections such as directories or tag pages, but keep a few samples.
   - Run `scripts/extract.py` → `pages.json`.
-  - This gives, per page: meta description, duplicate titles, H1 count, canonical, noindex, hreflang, JSON-LD, alt text, Arabic presence, `#` links and CMS boilerplate.
+  - This gives, per page: meta description (and length), duplicate titles, H1/H2/H3, canonical, noindex, hreflang, JSON-LD, alt text, Arabic presence, `#` links, CMS boilerplate, and internal links out/in (orphans).
+  - After Gate B, run `scripts/keyword_check.py` with the keyword map as `url,keyword` CSV to check keyword placement and cannibalization on the current pages.
 - **Lighthouse (mobile, lab).** Run it on representative URLs: home, a category, a product, a brand, contact. From the raw JSON, record Performance, LCP, total weight, render-blocking time and the LCP image load delay.
 - **Accessibility.** Run pa11y on about 5 pages (WCAG2AA) and report the error counts.
 - **Indexing hygiene.** Check:

@@ -4,7 +4,7 @@
 #   leftovers; extend it per client (e.g. "Lorem ipsum|Sample Page|Feature One").
 # Writes <crawlDir>/pages.json and prints a summary. Every number you quote in a proposal should come from pages.json.
 import json, re, sys, html.parser, collections
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urljoin, urldefrag
 
 sys.stdout.reconfigure(encoding='utf-8')
 d = sys.argv[1]
@@ -19,6 +19,7 @@ class P(html.parser.HTMLParser):
         super().__init__(convert_charrefs=True)
         s.tpl = 0; s.skip = 0; s.in_title = False; s.title = ''; s.metas = {}; s.links = []; s.h = collections.defaultdict(list)
         s.cur_h = None; s.imgs = []; s.jsonld = []; s.in_ld = False; s.ld = ''; s.text = []; s.html_attrs = {}; s.a = []
+        s.main = 0; s.main_text = []
 
     def handle_starttag(s, t, a):
         a = dict(a)
@@ -31,7 +32,8 @@ class P(html.parser.HTMLParser):
         if t == 'title': s.in_title = True
         if t == 'meta' and (a.get('name') or a.get('property')): s.metas.setdefault((a.get('name') or a.get('property')).lower(), a.get('content', ''))
         if t == 'link': s.links.append(a)
-        if t in ('h1', 'h2'): s.cur_h = t; s.h[t].append('')
+        if t in ('h1', 'h2', 'h3'): s.cur_h = t; s.h[t].append('')
+        if t == 'main': s.main += 1
         if t == 'img': s.imgs.append(a)
         if t == 'a': s.a.append(a.get('href'))
 
@@ -42,7 +44,8 @@ class P(html.parser.HTMLParser):
             s.skip = max(0, s.skip - 1)
             if s.in_ld: s.jsonld.append(s.ld); s.in_ld = False
         if t == 'title': s.in_title = False
-        if t in ('h1', 'h2'): s.cur_h = None
+        if t in ('h1', 'h2', 'h3'): s.cur_h = None
+        if t == 'main': s.main = max(0, s.main - 1)
 
     def handle_data(s, x):
         if s.tpl: return
@@ -51,6 +54,7 @@ class P(html.parser.HTMLParser):
         if s.in_title: s.title += x
         if s.cur_h: s.h[s.cur_h][-1] += x
         s.text.append(x)
+        if s.main: s.main_text.append(x)
 
 
 pages = []
@@ -62,6 +66,15 @@ for l in log:
     types = []
     for j in p.jsonld:
         types += re.findall(r'"@type"\s*:\s*"([^"]+)"', j)
+    # Same-host links, fragment stripped -> internal link graph (inlinks / orphans below).
+    host = urlparse(l['url']).netloc
+    out = set()
+    for h in p.a:
+        if not h or h.startswith(('#', 'mailto:', 'tel:', 'javascript:', 'whatsapp:')): continue
+        u = urldefrag(urljoin(l['url'], h))[0]
+        if urlparse(u).netloc == host and u != l['url']: out.add(u)
+    # Opening words of the main content (falls back to the whole page when there is no <main>): keyword placement.
+    body = re.sub(r'\s+', ' ', ' '.join(p.main_text or p.text)).strip()
     pages.append({
         'url': l['url'], 'status': 200, 'ms': l['ms'], 'kb': round(l['bytes'] / 1024),
         'lang': p.html_attrs.get('lang'), 'dir': p.html_attrs.get('dir'),
@@ -69,11 +82,19 @@ for l in log:
         'robots': p.metas.get('robots'), 'og_image': p.metas.get('og:image'),
         'canonical': [x.get('href') for x in p.links if x.get('rel') == 'canonical'],
         'hreflang': [x.get('hreflang') for x in p.links if x.get('hreflang')],
-        'h1': [h.strip() for h in p.h['h1']], 'h2n': len(p.h['h2']),
+        'h1': [h.strip() for h in p.h['h1']], 'h2n': len(p.h['h2']), 'h3n': len(p.h['h3']),
+        'h2': [re.sub(r'\s+', ' ', h).strip() for h in p.h['h2']][:30], 'desc_len': len(p.metas.get('description') or ''),
+        'first_words': ' '.join(body.split()[:100]), 'has_main': bool(p.main_text),
+        'alts': [i.get('alt') for i in p.imgs if i.get('alt')][:40], 'internal_out': sorted(out),
         'imgs': len(p.imgs), 'alt_missing': sum('alt' not in i for i in p.imgs), 'alt_empty': sum(i.get('alt') == '' for i in p.imgs),
         'jsonld_types': types, 'words': len(txt.split()), 'arabic_chars': len(re.findall(r'[؀-ۿ]', txt)),
         'hash_links': sum(1 for h in p.a if h in ('#', '')), 'boilerplate': bool(BOILER.search(txt)),
     })
+# Inlinks counted only from crawled pages: a page "orphaned" here may still be linked from sections the crawl excluded.
+norm = lambda u: u.rstrip('/')
+inl = collections.Counter(norm(u) for pg in pages if pg.get('status') == 200 for u in pg['internal_out'])
+for pg in pages:
+    if pg.get('status') == 200: pg['inlinks'] = inl[norm(pg['url'])]
 json.dump(pages, open(f'{d}/pages.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 
 ok = [p for p in pages if p['status'] == 200]
@@ -95,3 +116,8 @@ print(f"hreflang present: {C(lambda p: p['hreflang'])}; JSON-LD present: {C(lamb
 print(f"images: {sum(p['imgs'] for p in ok)}; alt missing: {sum(p['alt_missing'] for p in ok)}; alt empty: {sum(p['alt_empty'] for p in ok)}")
 print(f"thin (<150 words incl. header/footer): {C(lambda p: p['words'] < 150)}; pages with Arabic text (>50 chars): {C(lambda p: p['arabic_chars'] > 50)}")
 print(f"pages with '#'/empty links: {C(lambda p: p['hash_links'])}; boilerplate text on: {[urlparse(p['url']).path for p in ok if p['boilerplate']]}")
+print(f"meta description length: <70 chars {C(lambda p: p['desc'] and p['desc_len'] < 70)}; >160 chars {C(lambda p: p['desc_len'] > 160)}")
+print(f"h3 without any h2: {C(lambda p: p['h3n'] and not p['h2n'])}; pages without <main>: {C(lambda p: not p['has_main'])}")
+print(f"internal links out (median): {sorted(len(p['internal_out']) for p in ok)[len(ok)//2]}; "
+      f"orphans among crawled pages (0 inlinks): {[urlparse(p['url']).path for p in ok if p['inlinks'] == 0][:10]}; "
+      f"1-2 inlinks: {C(lambda p: 0 < p['inlinks'] < 3)}")

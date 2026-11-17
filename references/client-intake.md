@@ -29,6 +29,16 @@ The "Unlocks" column is the reason to give the user when they ask why an item ma
 | A past proposal the user likes | Format, tone, section order to match | Use the outlines in the track files |
 | Who on the client side will edit content after launch | CMS choice, training needs | Becomes a discovery question |
 
+## SEO plan extras
+
+For any SEO work, also send the batch data request (D1–D13) in [seo-optimization-plan.md](seo-optimization-plan.md). The items that **block** a specific topic:
+- the keyword map (keyword placement)
+- Google Business Profile access (GBP changes)
+- the official NAP (local SEO)
+- hosting/CMS access (implementation only)
+
+Everything else strengthens the plan. Missing items are named in the plan with the topic they would unlock.
+
 ## Greenfield extras (no website yet)
 
 | Input | Unlocks |

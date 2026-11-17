@@ -1,6 +1,6 @@
 ---
 name: client-proposal
-description: Gated, evidence-first workflow for an agency preparing a proposal for a new client. Track M is an Integrated Marketing & Digital Growth Strategy, where the team's own strategy leads and is followed by the agency's services, anonymous competitor patterns, campaigns, a 90-day plan and KPIs. Track W is a technical Web + SEO proposal, for clients with an existing site or with none yet (greenfield): site audit or market baseline, keyword map, platform decision, sitemap, a bilingual home and product prototype, and an Arabic-led PDF. Use this skill whenever the user is pitching, preparing an offer for, or researching a prospect or client. That includes "عرض"/"بروبوزال"/"proposal"/"خطة" for a company, auditing a prospect's website or competitors for a pitch, turning a team strategy (.docx) into a client proposal, planning a website or SEO offer, or producing the proposal HTML/PDF/PPTX or a clickable prototype. Use it even if the user doesn't say "workflow" or name the skill.
+description: Gated, evidence-first workflow for an agency preparing a proposal for a new client. Track M is an Integrated Marketing & Digital Growth Strategy, where the team's own strategy leads and is followed by the agency's services, anonymous competitor patterns, campaigns, a 90-day plan and KPIs. Track W is a technical Web + SEO proposal, for clients with an existing site or with none yet (greenfield): site audit or market baseline, keyword map, platform decision, sitemap, a bilingual home and product prototype, and an Arabic-led PDF. Use this skill whenever the user is pitching, preparing an offer for, or researching a prospect or client. That includes "عرض"/"بروبوزال"/"proposal"/"خطة" for a company, auditing a prospect's website or competitors for a pitch, turning a team strategy (.docx) into a client proposal, planning a website or SEO offer, writing a full SEO optimization plan (technical, on-page, local, off-page, AEO/GEO) even without a redesign, or producing the proposal HTML/PDF/PPTX or a clickable prototype. Use it even if the user doesn't say "workflow" or name the skill.
 ---
 
 # Client proposal workflow
@@ -17,6 +17,7 @@ Two proposal types, built for Arabic-first, bilingual B2B markets such as Egypt 
 Read the track file before starting:
 - Track M: [references/marketing-track.md](references/marketing-track.md)
 - Track W: [references/web-seo-track.md](references/web-seo-track.md)
+- Any SEO work (inside Track W, or a standalone SEO plan for an existing site): [references/seo-optimization-plan.md](references/seo-optimization-plan.md). It covers every SEO topic and lists the data each one needs from the user. Send its data request (D1–D13) in one batch at the start.
 
 Read these as you reach the stage that needs them:
 - Before writing any finding or the QA pass: [references/evidence-and-qa.md](references/evidence-and-qa.md)
@@ -107,7 +108,8 @@ Create everything under `<workspace>/<client>-proposal/`, next to the untouched 
 | Script | Purpose | Usage |
 |---|---|---|
 | `scripts/crawl.mjs` | Polite sitemap crawl. Saves raw HTML + status per URL | `node crawl.mjs <sitemap.xml> <outDir> [excludeRegex] [keepExcluded=3] [delayMs=2000]` |
-| `scripts/extract.py` | Offline on-page SEO extraction → `pages.json` + summary. Covers titles, meta, H1, canonical, hreflang, JSON-LD, alt, Arabic presence and CMS boilerplate | `python -I extract.py <crawlDir> [boilerplateRegex]` |
+| `scripts/extract.py` | Offline on-page SEO extraction → `pages.json` + summary. Covers titles, meta (incl. length), H1/H2/H3, canonical, hreflang, JSON-LD, alt, Arabic presence, CMS boilerplate, and the internal link graph (links out, inlinks, orphans) | `python -I extract.py <crawlDir> [boilerplateRegex]` |
+| `scripts/keyword_check.py` | Where each page's primary keyword appears (title, H1, description, first 100 words, slug, H2, alt) + cannibalization. Arabic-normalized. Needs the keyword map as `url,keyword` CSV | `python -I keyword_check.py <pages.json> <keyword-map.csv> [out.csv]` |
 | `scripts/shot.mjs` | Full-page screenshot (RTL-safe) + overflow and broken-image report. Supports `file.html#hash` | `node shot.mjs <in.html[#hash]> <out.png> <width> <dpr> <mobile 0/1> <profileDir> [port]` |
 | `scripts/route-test.mjs` | Click-through test for a single-file prototype, driven by a JSON steps file | `node route-test.mjs <prototype.html> <steps.json> <profileDir> <width> <mobile 0/1> [port]` |
 | `scripts/pagecheck.mjs` | Per-page fit check for fixed A4 `.page` layouts | `node pagecheck.mjs <in.html> <profileDir> [footerReservePx=62] [port]` |
